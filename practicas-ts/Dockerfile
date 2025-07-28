@@ -18,7 +18,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 
 COPY package*.json ./
-COPY .env ./.env
+# COPY .env ./.env
 
 EXPOSE 3000
 ENV NODE_OPTIONS=--experimental-global-webcrypto

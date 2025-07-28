@@ -30,7 +30,7 @@ services:
       DB_USERNAME: exposia
       DB_PASSWORD: exposia123
       DB_NAME: exposia_db
-      GEMINI_API_KEY: AIzaSyAm2H9HFD8I0_gFmB2IgmSrQ0w_2kfDr-M
+      GEMINI_API_KEY: AIzaSyAAdPcAsJR4_LRCsZfrRfiG166edOkna28
       GEMINI_MODEL: gemini-1.5-flash
       PROMPT_REVISION_BASE: |
         Eres un revisor experto de contenido técnico y educativo. Tu objetivo es evaluar el 'CONTENIDO_A_REVISAR' proporcionado de manera concisa y objetiva. Tu análisis debe basarse **EXCLUSIVAMENTE** en el texto que recibas. Genera una evaluación detallada y directa para cada uno de los siguientes puntos. Sé breve y preciso en cada respuesta:
