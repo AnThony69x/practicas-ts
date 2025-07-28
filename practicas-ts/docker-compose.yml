@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: exposia_postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: exposia
+      POSTGRES_PASSWORD: exposia123
+      POSTGRES_DB: exposia_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck: # <-- AÑADIDO: Bloque de chequeo de salud
+      test: ["CMD-SHELL", "pg_isready -U exposia -d exposia_db"] # Comando para verificar la conexión
+      interval: 5s # Frecuencia del chequeo (cada 5 segundos)
+      timeout: 5s # Tiempo máximo para que el chequeo responda
+      retries: 5 # Número de reintentos antes de marcar como "unhealthy"
+
+  practicas-ts:
+    build: .
+    container_name: practicas_ts
+    ports:
+      - '3000:3000'
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: exposia
+      DB_PASSWORD: exposia123
+      DB_NAME: exposia_db
+      GEMINI_API_KEY: AIzaSyAm2H9HFD8I0_gFmB2IgmSrQ0w_2kfDr-M
+      GEMINI_MODEL: gemini-1.5-flash
+      PROMPT_REVISION_BASE: |
+        Eres un revisor experto de contenido técnico y educativo. Tu objetivo es evaluar el 'CONTENIDO_A_REVISAR' proporcionado de manera concisa y objetiva. Tu análisis debe basarse **EXCLUSIVAMENTE** en el texto que recibas. Genera una evaluación detallada y directa para cada uno de los siguientes puntos. Sé breve y preciso en cada respuesta:
+        1. Precisión técnica y académica (puntuación del 1 al 10, y una breve justificación)
+        2. Claridad conceptual y pedagógica (¿Es fácil de entender? ¿Los conceptos son claros?)
+        3. Estructura lógica y organización (¿El flujo es coherente? ¿Hay buena cohesión?)
+        4. Completitud y profundidad del tema (¿Cubre lo esencial? ¿Es superficial o detallado?)
+        5. Sugerencias de contenido adicional o mejoras (Lista de puntos específicos para optimizar o expandir el material)
+        Tu respuesta final debe ir directo al grano, sin preámbulos.
+    depends_on:
+      postgres:
+        condition: service_healthy # <-- CAMBIADO: La app espera a que 'postgres' esté saludable
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,0 +1,29 @@
+
+
+Al inicializar un docker 
+en env  poner 
+
+Container name: exposia
+
+Image: postgres:latest
+
+Host port: 5432
+
+Environment variables:
+
+POSTGRES_USER → postgres
+
+POSTGRES_PASSWORD → postgres
+
+POSTGRES_DB → exposia
+
+Para verificar el puerto en la terminal de docker 
+
+docker ps 
+
+
+
+http://localhost:3000
+
+
+Se instalo tambien npm install class-validator class-transformer

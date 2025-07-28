@@ -1,0 +1,27 @@
+🚀 Iniciando flujo de prueba del módulo de prácticas...
+
+🎤 Subiendo grabación...
+✅ Grabación subida: ID=9
+
+🧭 Registrando navegación por slides...
+✔️ Evento: slide 1, ts=0, tipo=inicio
+✔️ Evento: slide 2, ts=5000, tipo=siguiente
+✔️ Evento: slide 3, ts=10000, tipo=siguiente
+✔️ Evento: slide 4, ts=15000, tipo=siguiente
+
+📝 Añadiendo notas a cada slide...
+📝 Nota para slide 1 creada: ID=11
+📝 Nota para slide 2 creada: ID=12
+📝 Nota para slide 3 creada: ID=13
+📝 Nota para slide 4 creada: ID=14
+
+🎧 Generando fragmentos por slide...
+🎧 Fragmento slide 1: archivo=undefined
+🎧 Fragmento slide 2: archivo=undefined
+🎧 Fragmento slide 3: archivo=undefined
+🎧 Fragmento slide 4: archivo=undefined
+
+📘 Registrando historial de práctica...
+📘 Historial registrado con ID=3
+
+✅ Flujo completo ejecutado correctamente
