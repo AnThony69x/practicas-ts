@@ -36,9 +36,9 @@ export class ConversacionIaController {
   @Post('start-analysis-agent') 
   async manejarConsultaDesdeEndpointExterno(@Res() respuesta: Response) {
     // Cambiar este endpoint por el de tu servicio de consulta
-    const ENDPOINT_EXTERNO_URL_TEXTO = 'https://b34b6e52-84bb-4909-b706-a96ea6e757a2.mock.pstmn.io/consulta-texto';
+    const ENDPOINT_EXTERNO_URL_TEXTO = 'http://recomendaciones:4000/obtener-texto';
     // Cambiar este endpoint por el de tu servicio de guardado
-    const ENDPOINT_GUARDAR_DATOS_URL = 'https://b34b6e52-84bb-4909-b706-a96ea6e757a2.mock.pstmn.io/guardar-respuesta'; 
+    const ENDPOINT_GUARDAR_DATOS_URL = 'http://recomendaciones:4000/respuesta-analizada'; 
 
     try {
       // Paso 1: Obtener el texto del Endpoint Externo

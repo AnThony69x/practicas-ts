@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  recomendaciones-db:
+    image: postgres:15
+    container_name: recomendaciones-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: exposia
+      POSTGRES_PASSWORD: exposia123
+      POSTGRES_DB: exposia_db
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U exposia -d exposia_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  recomendaciones:
+    build: .
+    container_name: recomendaciones
+    ports:
+      - "4000:4000"
+    depends_on:
+      recomendaciones-db:
+        condition: service_healthy
+    environment:
+      DB_HOST: recomendaciones-db
+      DB_PORT: 5432
+      DB_USERNAME: exposia
+      DB_PASSWORD: exposia123
+      DB_NAME: exposia_db
+    restart: unless-stopped
+
+volumes:
+  dbdata:
