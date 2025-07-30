@@ -1,17 +1,13 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { RespuestaService } from './respuesta.service';
-import { HttpService } from '@nestjs/axios';
-import { firstValueFrom } from 'rxjs';
 import { CreateRespuestaDto } from './dto/create-respuesta.dto';
 import { Respuesta } from './entities/respuesta.entity';
 
 @Controller()
 export class RespuestaController {
-  constructor(
-    private readonly respuestaService: RespuestaService,
-    private readonly httpService: HttpService,
-  ) {}
+  constructor(private readonly respuestaService: RespuestaService) {}
 
+  // Endpoint para guardar una nueva respuesta analizada
   @Post('/respuesta-analizada')
   async ejecutarAnalisis(@Body('texto') texto: string): Promise<Respuesta> {
     console.log('Texto recibido:', texto);
@@ -26,5 +22,9 @@ export class RespuestaController {
     };
 
     return this.respuestaService.create(dto);
+  // Endpoint para consultar todas las respuestas guardadas
+  @Get('/respuestas')
+  findAll(): Promise<Respuesta[]> {
+    return this.respuestaService.findAll();
   }
 }
