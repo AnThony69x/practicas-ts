@@ -68,7 +68,7 @@ export class AppModule implements NestModule {
         '/api/v1/start-analysis-agent', 
         '/v1/start-analysis-agent',
         '/v1/consultar-prueba-ia',
-        '/api/v1/consultar-prueba-ia'// Excluye la ruta de IA de la autenticación
+        '/api/v1/consultar-prueba-ia'
       )
       .forRoutes('*');
   }

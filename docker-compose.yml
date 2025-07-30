@@ -13,14 +13,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
-    healthcheck: # <-- AÑADIDO: Bloque de chequeo de salud
-      test: ["CMD-SHELL", "pg_isready -U exposia -d exposia_db"] # Comando para verificar la conexión
-      interval: 5s # Frecuencia del chequeo (cada 5 segundos)
-      timeout: 5s # Tiempo máximo para que el chequeo responda
-      retries: 5 # Número de reintentos antes de marcar como "unhealthy"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U exposia -d exposia_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   practicas-ts:
-    build: .
+    build:
+      context: ./practicas-ts # <-- CAMBIO CLAVE AQUÍ: Ruta al directorio del proyecto practicas-ts
     container_name: practicas_ts
     ports:
       - '3000:3000'
@@ -30,7 +31,7 @@ services:
       DB_USERNAME: exposia
       DB_PASSWORD: exposia123
       DB_NAME: exposia_db
-      GEMINI_API_KEY: AIzaSyAAdPcAsJR4_LRCsZfrRfiG166edOkna28
+      GEMINI_API_KEY: AIzaSyAm2H9HFD8I0_gFmB2IgmSrQ0w_2kfDr-M
       GEMINI_MODEL: gemini-1.5-flash
       PROMPT_REVISION_BASE: |
         Eres un revisor experto de contenido técnico y educativo. Tu objetivo es evaluar el 'CONTENIDO_A_REVISAR' proporcionado de manera concisa y objetiva. Tu análisis debe basarse **EXCLUSIVAMENTE** en el texto que recibas. Genera una evaluación detallada y directa para cada uno de los siguientes puntos. Sé breve y preciso en cada respuesta:
@@ -42,7 +43,25 @@ services:
         Tu respuesta final debe ir directo al grano, sin preámbulos.
     depends_on:
       postgres:
-        condition: service_healthy # <-- CAMBIADO: La app espera a que 'postgres' esté saludable
+        condition: service_healthy
+    restart: unless-stopped
+
+  recomendaciones:
+    build:
+      context: ./recomendaciones # <-- CAMBIO CLAVE AQUÍ: Ruta al directorio del proyecto recomendaciones
+    container_name: recomendaciones
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: exposia
+      DB_PASSWORD: exposia123
+      DB_NAME: exposia_db
+      # Si el servicio de recomendaciones necesita otras variables de entorno (por ejemplo, API_KEY_IA), agrégalas aquí.
     restart: unless-stopped
 
 volumes:

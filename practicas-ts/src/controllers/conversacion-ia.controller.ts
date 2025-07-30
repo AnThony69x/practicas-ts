@@ -14,7 +14,7 @@ export class ConversacionIaController {
   ) {}
 
   // --- Tu método actual (consultar-prueba-ia) ---
-  @Post('consultar-prueba-ia') // Puedes usar este nombre para tu endpoint de prueba directo
+  @Post('start-analysis-agent') // Puedes usar este nombre para tu endpoint de prueba directo
   async manejarConsultaDirecta(@Body() datos: ConsultaDto, @Res() respuesta: Response) {
     try {
       const textoRespuestaIa = await this.servicioIa.obtenerRespuesta(datos);
@@ -33,7 +33,7 @@ export class ConversacionIaController {
     }
   }
 
-  @Post('start-analysis-agent') 
+  @Post('analysis-agent-by-webhook') 
   async manejarConsultaDesdeEndpointExterno(@Res() respuesta: Response) {
     // Cambiar este endpoint por el de tu servicio de consulta
     const ENDPOINT_EXTERNO_URL_TEXTO = 'http://recomendaciones:4000/obtener-texto';
